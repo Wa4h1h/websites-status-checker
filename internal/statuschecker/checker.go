@@ -33,7 +33,7 @@ func (c *checker) Check(concurrency int, src string, urls ...string) (<-chan *Re
 				defer wg.Done()
 				res, err := c.checkStatus(url)
 				if err != nil {
-					os.Stderr.Write([]byte(err.Error()))
+					os.Stderr.WriteString(err.Error())
 				} else {
 					resChan <- &Result{
 						Up:  res,

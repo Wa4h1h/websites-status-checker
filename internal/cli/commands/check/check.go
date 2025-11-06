@@ -2,6 +2,8 @@ package check
 
 import (
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/Wa4h1h/websites-status-checker/internal/statuschecker"
 	"github.com/spf13/cobra"
@@ -28,7 +30,16 @@ func New(checker statuschecker.StatusChecker) *cobra.Command {
 			for {
 				select {
 				case res := <-results:
-					fmt.Println(res.Url, "---", res.Up)
+					output := strings.Builder{}
+					output.WriteString(fmt.Sprintf("URL: %s", res.Url))
+
+					if res.Up {
+						output.WriteString(" is Up\n")
+					} else {
+						output.WriteString(" is down\n")
+					}
+
+					os.Stdout.WriteString(output.String())
 				case <-done:
 					return
 				}

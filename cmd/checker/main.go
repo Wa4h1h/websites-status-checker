@@ -23,6 +23,6 @@ func main() {
 	}, check.New(statuschecker.New()))
 
 	if err := c.Run(); err != nil {
-		os.Stderr.Write([]byte(err.Error()))
+		os.Stderr.WriteString(err.Error())
 	}
 }
